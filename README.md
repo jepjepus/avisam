@@ -19,13 +19,17 @@ Hi ha 3 programes (2 d'entorn arduino IDE, els .ino i 1 d'entorn C):
 
 Nota: els programes .ino han d'estar continguts en una carpeta amb el mateix nom que aquest programa; altrament, l'entorn es queixa.
 
-Hi ha tres carpetes addicionals:
+Hi ha quatre carpetes addicionals:
 
 ./Wire
 
 biblioteca arduino IDE modificada per tal d'admetre la inicialització del bus i2c sense resistències internes de pullup.
 Habitualment aquestes resistències van lligades a +5 V i el nostre prototip treballa amb +3,3 V. La biblioteca Wire estàndard de l'arduino IDE
 no contempla aquesta situació i aquesta, modificada i retrocompatible, admet activar(per defecte)/desactivar els pullups interns.
+
+./vterm
+
+que conté biblioteca vterm per tal d'usar controls de terminal vterm (VT100). S'instal·la a l'arduino IDE local a l'usuari.
 
 ./maquina
 
