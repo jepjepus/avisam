@@ -7,7 +7,7 @@
 // a diferencia d'un programa principal arduino IDE no ens cal indicar
 // extern "C" per aixo es comenta la clausula deixant nomes include:
 // extern "C" {
-#include "maquina.h"
+#include "maquina/maquina.h"
 //}
 
 FILE * fitxer; // fitxer amb els valors x y z
