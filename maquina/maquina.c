@@ -19,6 +19,10 @@ void init_cua()
     lis_force[x] = 0;
     x++;
   }
+  state = repos;
+  blok = 0;
+  sum = 0;
+  i_cua = 0;
 }
 
 static long int encua (long int val) 

@@ -93,13 +93,21 @@ void term_inicia(void)
 {
   term.init();
   term.cls();
-  term.show_cursor(false);  
+  term.show_cursor(false);
+}
+
+void term_inicia_2n(void)
+{
+  term.cls();
+  term.position(0,0);
+  term.print("avisam - detector de caigudes - epsem enginyeria de sistemes");
+  term.position(2,0);
 }
 
 void setup()  
 {
   serie_inicia();
-  term_inicia();
+  term_inicia(); // inicia terminal per primer cop
   wire_inicia();
   term.print("Iniciat bus I2C. ");
   term.print("Esperant l'ADXL...");
@@ -108,19 +116,25 @@ void setup()
   }
    term.print(" ADXL trobat. Configurant ADXL...");
    delay(1500);
-   term.cls();
+   term_inicia_2n(); // inicia terminal 2n cop, amb titol, etc.
    adxl_configura();
    init_cua();
 }
 
-void mostra_valors(int x, int y, int valor[3])
+// mostra_valors: funcio que rep un pas entre 0 i 79 i tres valors x y z
+// sortida: dibuixa valors co a punt d'una forma de grafica.
+// valors 10 bts amb signe (entre -512 i 511); es passen a 0..1023 i despres proporcionalment a 0..7 per poder-los pintar.
+
+void mostra_valors(int pas, int valor[3])
 {
-     int suma;
-     char buf[40];
-     term.position(x,y);
-     suma = abs(valor[0])+abs(valor[1])+abs(valor[2]);
-     sprintf(buf,"(x,y,z):(%5d,%5d,%5d) abssum:%5d",valor[0],valor[1],valor[2], suma);
-     term.print(buf);
+    term.position( 8 - (valor[0]+512)/128, pas); term.print("x"); // pinta x 
+    term.position(16 - (valor[1]+512)/128, pas); term.print("y"); // pinta y
+    term.position(24 - (valor[2]+512)/128, pas); term.print("z"); // pinta z
+}
+
+void mostra_caiguda(void)
+{
+  term.position(16,10); term.print("CAIGUDA!");
 }
 
 int valor[3]; //lectura xyz de l'adxl
@@ -128,20 +142,24 @@ int valor[3]; //lectura xyz de l'adxl
 void loop() // run over and over
 {
   int i=0, estat;
-  //while(i<50)
   while (-1)
   {
      adxl_llegeix_mb(ADXL_DATA, 6, valor); //llegim 3 int de l'adxl
      estat=maquina(valor[0],valor[1],valor[2]); // crida a maquina d'estats
-     Serial.print(estat);
-     Serial.print(" ");
-//     Serial.println(return_sum());
-     if (estat == 3 ) Serial.println(" CAIGUDA!");
-//     mostra_valors(i+1,0,valor); //mostrem a apantalla els valors llegits
+     if (estat == 3 ) // caiguda!
+     {
+       mostra_caiguda(); // mostrem missatge caiguda
+       delay(10000); // esperem 10 segons
+       init_cua(); // reiniciem algorisme a repos
+       i=0; //comencem a 0
+       term_inicia_2n();
+     }
+     i=(i+1) % 80; // de 0 a 79
+     if (i==0) term_inicia_2n();
+     mostra_valors(i,valor);
      delay(20);
-     i++;
+
   }
-     delay(5000);
 }
 
 
