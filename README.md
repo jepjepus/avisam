@@ -11,13 +11,17 @@ C and arduino IDE code to use an ADXL345 accelerometer in order to detect elder 
 #avi-sa'm:
 Codi C i d'arduino IDE per usar un acceleròmetre ADXL345 per detectar caigudes de persones grans.
 
-Hi ha 3 programes (2 d'entorn arduino IDE, els .ino i 1 d'entorn C):
+Hi ha 4 programes (3 d'entorn arduino IDE, els .ino i 1 d'entorn C):
 
 ./prova_arduino_adxl345_captura_continua/prova_arduino_adxl345_captura_continua.ino: permet captura contínua valors x y z en el terminal.
-./prova_arduino_adxl345.ino: connectat a terminal va mostrant estats de la màquina d'estats que inclou el cas de caiguda.
+
+./prova_arduino_adxl345/prova_arduino_adxl345.ino: connectat a terminal va mostrant estats de la màquina d'estats que inclou el cas de caiguda.
+
+./prova_arduino_adxl345_v2/prova_arduino_adxl345_v2.ino: connectat a terminal va mostrant grafica x y z fins que mostra el cas de caiguda.
+
 ./prova_c_fitxers_a_algorisme.c: programa que permet provar l'algorisme de detecció de caiguda tot llegint els valors x y z des d'un fitxer.
 
-Nota: els programes .ino han d'estar continguts en una carpeta amb el mateix nom que aquest programa; altrament, l'entorn es queixa.
+Nota: els programes .ino han d'estar continguts en una carpeta amb el mateix nom que aquest programa; altrament, l'entorn arduino IDE es queixa.
 
 Hi ha quatre carpetes addicionals:
 
@@ -35,7 +39,8 @@ que conté biblioteca vterm per tal d'usar controls de terminal vterm (VT100). S
 
 que conté maquina.h i maquina.c: formen l'algorisme de detecció de caiguda basat en diagrama d'estat i valors llindar.
 A destacar que la carpeta ./prova_arduino_adxl345 conté enllaços simbòlics a aquests. Ho fem perquè l'arduino IDE pugui compilar-los
-ja que no accepta que siguin fora de la carpeta del programa principal .ino.
+ja que no accepta que siguin fora de la carpeta del programa principal .ino. En cas d'haver de modificar aquests fitxers de de l'IDE, CAL fer-ho
+editant els fitxers i no pas els enllaços, ja que altrament queda desat com a fitxer en la carpeta actual (=es perd l'enllaç, es duplica el fitxer).
 
 ./captures
 
