@@ -10,7 +10,7 @@ extern "C" {
 #include "maquina.h"
 }
 
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 #include <string.h>
 
 #define ADXL_ADDRESS 0x53 // adreça de l'accelerometre
@@ -127,7 +127,8 @@ int valor[3]; //lectura xyz de l'adxl
 
 void loop() // run over and over
 {
-  int i=0, estat;
+  int i=0;
+ M_STATE estat;
   //while(i<50)
   while (-1)
   {

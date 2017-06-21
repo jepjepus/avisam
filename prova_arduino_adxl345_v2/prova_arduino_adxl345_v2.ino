@@ -10,7 +10,7 @@ extern "C" {
 #include "maquina.h"
 }
 
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 #include <string.h>
 
 #define ADXL_ADDRESS 0x53 // adreça de l'accelerometre
@@ -137,18 +137,21 @@ void mostra_caiguda(void)
   term.position(16,10); term.print("CAIGUDA!");
 }
 
+
 int valor[3]; //lectura xyz de l'adxl
 
 void loop() // run over and over
 {
-  int i=0, estat;
+  int i=0;
+  M_STATE estat; // estat obtingut de la maquina d'estats
   while (-1)
   {
      adxl_llegeix_mb(ADXL_DATA, 6, valor); //llegim 3 int de l'adxl
      estat=maquina(valor[0],valor[1],valor[2]); // crida a maquina d'estats
-     if (estat == 3 ) // caiguda!
+     if (estat == S_KO ) // caiguda!
      {
        mostra_caiguda(); // mostrem missatge caiguda
+       // s.o.s, enviarem un avis VERMELL
        delay(10000); // esperem 10 segons
        init_cua(); // reiniciem algorisme a repos
        i=0; //comencem a 0

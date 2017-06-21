@@ -1,6 +1,6 @@
 #include <Wire.h> // incloem la nostra nova versio de Wire.h
 
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 #include <string.h>
 
 #define ADXL_ADDRESS 0x53 // adreça de l'accelerometre

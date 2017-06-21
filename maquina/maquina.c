@@ -3,9 +3,8 @@
 //
 
 #include "maquina.h"
-enum states {repos = 0, lliure = 1, impacta = 2, ko = 3};
 #define N 5 
-enum states state = repos;
+M_STATE state = S_REPOS;
 static int tiks = 0;
 long int lis_force[N];
 int i_cua = 0;
@@ -19,7 +18,7 @@ void init_cua()
     lis_force[x] = 0;
     x++;
   }
-  state = repos;
+  state = S_REPOS;
   blok = 0;
   sum = 0;
   i_cua = 0;
@@ -38,7 +37,7 @@ long int return_sum()
   return sum;
 }
 
-int maquina(long int x, long int y, long int z)
+M_STATE maquina(long int x, long int y, long int z)
 {
     long int force;
     force = x*x+y*y+z*z;
@@ -47,48 +46,38 @@ int maquina(long int x, long int y, long int z)
     if (blok <= N)
     {
       blok++;
-      return force;  
+      //return force;  
     }
     
     switch (state)
     {
-        case repos:
+        case S_REPOS:
             if (force < caiguda)
             {
                 //Si estic aqui vol dir que estic caient
-                state = lliure;
-                return 5;
+                state = S_LLIURE;
             }
-            return 6;
             break;
             
-        case lliure:
+        case S_LLIURE:
             //Segueixo caient
             if (force < impacte )
             {
                 //He picat terra
-                state = impacta;
-                return 0;
+                state = S_IMPACTA;
             }
-            return 7;
             break;
             
-        case impacta:
+        case S_IMPACTA:
             if(force < f_max && force > f_min)
             {
                 //He pasat massa poc temps al terra, falsa alarma
-                state = ko;
-                return 4;
+                state = S_KO;
             }
-            return 8;  //no ha impactat
             break;
-        case ko:
-            // s.o.s, enviarem un avis VERMELL
-	    state = ko;
-            return 3; //
-            
+        case S_KO:
+	    state = S_KO;
             break;
     }
-   return -1; // no detecta res
-
+    return state;
 }

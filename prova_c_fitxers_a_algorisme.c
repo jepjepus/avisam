@@ -77,7 +77,8 @@ int valor[3]; //lectura xyz
 void loop(void)
 {
  int n=0;
- int i=0, estat;
+ int i=0;
+ M_STATE estat; //estat retornat per l'algorisme maquina
   while (n!=EOF)
   {
     n=adxl_llegeix_mb(6, valor); // llegim xyz del fitxer
