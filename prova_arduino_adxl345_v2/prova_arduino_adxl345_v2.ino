@@ -1,16 +1,23 @@
+/*
+EPSEM curs 1617, quadrimestre de primavera, enginyeria de sistemes
+
+Marc Brunet Hafid Karbouch Alejandro Jabalquinto Josep Lladonosa
+
+#avisam C and arduino IDE code to use an ADXL345 accelerometer in order to detect elder falls.
+
+#avi-sa'm: Codi C i d'arduino IDE per usar un acceleròmetre ADXL345 per detectar caigudes de persones grans.
+ */
+
 #include <Wire.h> // el nostre Wire
 
 #include <VTerm.h> // biblioteca d'us de terminal en linia serie (per fer esborra pantalla, posiciona,...
 #include <VT100.h> // terminal tipus VT100
-/*
- 
- */
+
 // extern "C" permet incloure .h per a funcions C directament en l'arduino IDE
 extern "C" {
 #include "maquina.h"
 }
 
-//#include <SoftwareSerial.h>
 #include <string.h>
 
 #define ADXL_ADDRESS 0x53 // adreça de l'accelerometre
@@ -100,6 +107,7 @@ void term_inicia_2n(void)
 {
   term.cls();
   term.position(0,0);
+  term.set_attribute(BT_BOLD);
   term.print("avisam - detector de caigudes - epsem enginyeria de sistemes");
   term.position(2,0);
 }
@@ -127,13 +135,20 @@ void setup()
 
 void mostra_valors(int pas, int valor[3])
 {
-    term.position( 8 - (valor[0]+512)/128, pas); term.print("x"); // pinta x 
+    term.set_color(BT_YELLOW,BT_BLACK);
+    term.position( 8 , pas); term.print("-"); // linia horitzontal
+    term.position( 8 - (valor[0]+512)/128, pas); term.print("x"); // pinta x
+    term.set_color(BT_GREEN,BT_BLACK);
+    term.position(16 , pas); term.print("-"); // linia horitzontal
     term.position(16 - (valor[1]+512)/128, pas); term.print("y"); // pinta y
+    term.set_color(BT_CYAN,BT_BLACK);
+    term.position(24 , pas); term.print("-"); // linia horitzontal
     term.position(24 - (valor[2]+512)/128, pas); term.print("z"); // pinta z
 }
 
 void mostra_caiguda(void)
 {
+  term.set_color(BT_WHITE,BT_BLACK);
   term.position(16,10); term.print("CAIGUDA!");
 }
 
@@ -161,7 +176,6 @@ void loop() // run over and over
      if (i==0) term_inicia_2n();
      mostra_valors(i,valor);
      delay(20);
-
   }
 }
 
