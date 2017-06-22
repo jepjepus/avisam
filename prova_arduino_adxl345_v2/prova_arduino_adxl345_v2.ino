@@ -1,4 +1,7 @@
 /*
+
+prova_arduino_adxl345_v2
+
 EPSEM curs 1617, quadrimestre de primavera, enginyeria de sistemes
 
 Marc Brunet Hafid Karbouch Alejandro Jabalquinto Josep Lladonosa
@@ -6,6 +9,18 @@ Marc Brunet Hafid Karbouch Alejandro Jabalquinto Josep Lladonosa
 #avisam C and arduino IDE code to use an ADXL345 accelerometer in order to detect elder falls.
 
 #avi-sa'm: Codi C i d'arduino IDE per usar un acceleròmetre ADXL345 per detectar caigudes de persones grans.
+
+
+Aquesta versio utilitza sequencies d'escapada VT100 que el programa de terminal ha d'interpretar.
+Aquestes sequencies permeten esborrat de pantalla, posicionament de cursor, us de colors, entre d'altres.
+
+Conve utilitzar un terminal compatible amb aquestes sequencies. A linux es pot usar el minicom, per exemple aixi:
+
+minicom -D /dev/ttyUSB0 -c on
+
+-D indica dispositiu
+-c on indica terminal amb colors activats
+
  */
 
 #include <Wire.h> // el nostre Wire
